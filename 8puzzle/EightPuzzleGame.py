@@ -5,7 +5,7 @@ CSC 425 Artificial Intelligence
 Instructor: Dr. Yangyang Tao
 Semester: Fall 2022
 
-Your name:
+Your name: Zonglin Wu
 '''
 
 import numpy as np
