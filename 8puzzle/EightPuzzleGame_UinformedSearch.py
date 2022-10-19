@@ -79,7 +79,7 @@ class UninformedSearchSolver:
             temp_state1[row-1,col] = temp_state1[row,col]
             temp_state1[row,col] = temp
             ret = check_inclusive(temp_state1)
-            if ret ! = 1 :
+            if ret != 1 :
                 self.openlist.append(temp_state1)
                 #add to the left of openlist - depth first search
                 self.openlist.insert(0,temp_state1)
@@ -90,17 +90,17 @@ class UninformedSearchSolver:
             temp_state2[row+1,col] = temp_state2[row,col]
             temp_state2[row,col] = temp
             ret = check_inclusive(temp_state2)
-            if ret ! = 1 :
+            if ret != 1 :
                 self.openlist.append(temp_state2)
 
         ### ←(move left) action ###
         temp_state3 = walk_state
-        if (col - 1) > =0 :
+        if (col - 1) >=0 :
             temp = temp_state3[row,col-1]
             temp_state3[row,col-1] = temp_state3[row,col]
             temp_state3[row,col] = temp
             ret = check_inclusive(temp_state3)
-            if ret ! = 1 :
+            if ret != 1 :
                 self.openlist.append(temp_state3)
 
         ### →(move right) action ###
@@ -110,7 +110,7 @@ class UninformedSearchSolver:
             temp_state4[row,col+1] = temp_state4[row,col]
             temp_state4[row,col] = temp
             ret = check_inclusive(temp_state4)
-            if ret ! = 1 :
+            if ret != 1 :
                 self.openlist.append(temp_state4)
 
         # Set the next current state
