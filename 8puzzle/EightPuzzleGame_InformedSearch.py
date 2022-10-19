@@ -3,10 +3,15 @@ from EightPuzzleGame_State import State
 '''
 This class implement the Best-First-Search (BFS) algorithm along with the Heuristic search strategies
 
-In this algorithm, an Open list is used to store the unexplored states and 
-a Closed list is used to store the visited state. Open list is a priority queue (First-In-First-Out). 
+Open list is used to store the unexplored states 
+Closed list is used to store the visited state. 
+
+Open list is a priority queue (First-In-First-Out). 
+
 The priority is insured through sorting the Open list each time after new states are generated 
-and added into the list. The heuristics are used to decide which node should be visited next.
+and added into the list. 
+
+The heuristics are used to decide which node should be visited next.
 
 In this informed search, reducing the state space search complexity is the main criterion. 
 We define heuristic evaluations to reduce the states that need to be checked every iteration. 
@@ -19,7 +24,7 @@ class InformedSearchSolver:
     goal = State()
     openlist = []
     closed = []
-    #states_path = []
+    states_path = []
     depth = 0
 
     def __init__(self, current, goal):
@@ -50,18 +55,24 @@ class InformedSearchSolver:
             ret = 1
         # the child is already in open
         #return 2
+        else if s in self.openlist :
+            ret = 2
         # the child is already in closed
         #return 3
+        else if s in self.closed :
+            ret = 3
+
         return ret
-        # TODO your code start here
 
 
+
+    # TODO your code start here
     def state_walk(self):
         """
         * The following state_walk function is designed to move the blank tile --> perform actions
         * There are four types of possible actions/walks of for the blank tile, i.e.,
         *  ↑ ↓ ← → (move up, move down, move left, move right)
-        * Note that in this framework the blank tile is represent by '0'
+        * Note that in this framework the blank tile is represent by '0' 
         """
 
         
@@ -81,7 +92,11 @@ class InformedSearchSolver:
 
         ''' The following program is used to do the state space actions
          The 4 conditions for moving the tiles all use similar logic, they only differ in the location of the 
-         tile that needs to be swapped. That being the case, I will only comment the first subroutine'''
+         tile that needs to be swapped. That being the case, I will only comment the first subroutine
+
+         if up is row - 1 > 0 than down would be row + 1 > 0 ?
+         
+         '''
         # TODO your code start here
         ### ↑(move up) action ###
         
@@ -89,7 +104,7 @@ class InformedSearchSolver:
            temp_state1 = new State()
            temp_state1.tile_seq = walk_state.tile_seq
             """
-             
+             for some reason deleting this comment would cause some bug ... wtf
             """
             temp = temp_state1[row-1,col]
             temp_state1[row-1,col] = temp_state1[row,col]
@@ -99,7 +114,15 @@ class InformedSearchSolver:
                 temp_state1.depth = self.depth
                 temp_state1.weight = heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
-                
+            """if ret == 2 :
+                temp_state1.depth = self.depth
+                temp_state1.weight = heuristic_test(temp_state1)
+                self.openlist.append(temp_state1) 
+            if ret == 3 :
+                temp_state1.depth = self.depth
+                temp_state1.weight = heuristic_test(temp_state1)
+                self.openlist.append(temp_state1)
+            """    
             """
              *get the 2d array of current 
              *define a temp 2d array and loop over current.tile_seq
@@ -109,14 +132,17 @@ class InformedSearchSolver:
              *define a new temp state via temp array
              *call check_inclusive(temp state)
              *do the next steps according to flag
+
              *if flag = 1 //not in open and closed
              *begin
              *assign the child a heuristic value via heuristic_test(temp state);
              *add the child to open
              *end;
+
              *if flag = 2 //in the open list
-             *if the child was reached by a shorter path
-             *then give the state on open the shorter path
+             *if the child was reached by a shorter path  #  by compare the heuristic value ?
+             *then give the state on open the shorter path # what does this mean ? add to the open list ?
+
              *if flag = 3 //in the closed list
              *if the child was reached by a shorter path then
              *begin
@@ -127,22 +153,41 @@ class InformedSearchSolver:
 
 
         ### ↓(move down) action ###
-
+        if (row + 1) >= 0:
+           temp_state1 = new State()
+           temp_state1.tile_seq = walk_state.tile_seq
+           temp = temp_state1[row+1,col]
+           temp_state1[row+1,col] = temp_state1[row,col]
+           temp_state1[row,col] = temp
+           ret = check_inclusive(temp_state1)
 
 
         ### ←(move left) action ###
-
-
+        if (col - 1) >= 0:
+           temp_state1 = new State()
+           temp_state1.tile_seq = walk_state.tile_seq
+           temp = temp_state1[row,col-1]
+           temp_state1[row,col-1] = temp_state1[row,col]
+           temp_state1[row,col] = temp
+           ret = check_inclusive(temp_state1)
 
 
         ### →(move right) action ###
-
+        if (col + 1) >= 0:
+           temp_state1 = new State()
+           temp_state1.tile_seq = walk_state.tile_seq
+           temp = temp_state1[row,col+1]
+           temp_state1[row,col+1] = temp_state1[row,col]
+           temp_state1[row,col] = temp
+           ret = check_inclusive(temp_state1)
 
 
         # sort the open list first by h(n) then g(n)
+   
         # Set the next current state
         
-        #states_path.append(self.current)
+        states_path.append(self.current)
+
         #TODO your code end here
 
 
