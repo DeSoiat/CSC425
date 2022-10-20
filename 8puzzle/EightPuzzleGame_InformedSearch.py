@@ -151,7 +151,7 @@ class InformedSearchSolver:
 
 
         ### ↓(move down) action ###
-        if (row + 1) < 2:
+        if (row + 1) <= 2:
             temp_state1 = State()
             temp_state1.tile_seq = walk_state.tile_seq
             temp = temp_state1[row+1,col]
@@ -171,7 +171,7 @@ class InformedSearchSolver:
 
 
         ### →(move right) action ###
-        if (col + 1) < 2:
+        if (col + 1) <= 2:
            temp_state1 = State()
            temp_state1.tile_seq = walk_state.tile_seq
            temp = temp_state1[row,col+1]
