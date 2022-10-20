@@ -44,6 +44,7 @@ class UninformedSearchSolver:
 
 
     def state_walk(self):
+
         """
         * The following state_walk function is designed to move the blank tile =0 --> perform actions
          * There are four types of possible actions/walks of for the blank tile, i.e.,
@@ -81,8 +82,8 @@ class UninformedSearchSolver:
             ret = check_inclusive(temp_state1)
             if ret != 1 :
                 self.openlist.append(temp_state1)
-                #add to the left of openlist - depth first search
-                self.openlist.insert(0,temp_state1)
+              
+
         ### ↓(move down) action ###
         temp_state2 = walk_state
         if (row+1) < 2 :
@@ -115,6 +116,7 @@ class UninformedSearchSolver:
 
         # Set the next current state
 
+
         #TODO your code end here
 
 
@@ -140,4 +142,8 @@ class UninformedSearchSolver:
                 self.state_walk()#generate the children
                 #for loop print out the content openlist
 
+        print("len closed:")
+        print(len(self.closed))
+        print("len opened:")
+        print(len(self.openlist))
 
