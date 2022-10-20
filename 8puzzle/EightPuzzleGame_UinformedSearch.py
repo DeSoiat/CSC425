@@ -154,9 +154,6 @@ class UninformedSearchSolver:
                     state_str = np.array2string(state.tile_seq, precision=2, separator=' ')
                     print(state_str[1:-1])
                 print(" ")
+                
 
-        print("len closed:")
-        print(len(self.closed))
-        print("len opened:")
-        print(len(self.openlist))
 

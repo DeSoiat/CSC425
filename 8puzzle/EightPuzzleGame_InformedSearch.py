@@ -53,10 +53,12 @@ class InformedSearchSolver:
         # the child is not in open or closed
         if s not in self.openlist or s not in self.closed :
             ret = 1
+
         # the child is already in open
         #return 2
         elif s in self.openlist :
             ret = 2
+
         # the child is already in closed
         #return 3
         elif s in self.closed :
@@ -111,10 +113,10 @@ class InformedSearchSolver:
                 temp_state1.depth = self.depth
                 temp_state1.weight = heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
-            """if ret == 2 :
-                temp_state1.depth = self.depth
-                temp_state1.weight = heuristic_test(temp_state1)
-                self.openlist.append(temp_state1) 
+            if ret == 2 :
+                if heuristic_test(temp_state1) < heuristic_test(temp)
+                    self.openlist.append(temp_state1) 
+            """
             if ret == 3 :
                 temp_state1.depth = self.depth
                 temp_state1.weight = heuristic_test(temp_state1)
