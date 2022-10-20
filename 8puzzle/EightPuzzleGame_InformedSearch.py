@@ -44,8 +44,8 @@ class InformedSearchSolver:
          * @param s
          * @return
         """
-        in_open = 0
-        in_closed = 0
+        #in_open = 0
+        #in_closed = 0
         ret = -1
 
         # TODO your code start here
@@ -100,10 +100,9 @@ class InformedSearchSolver:
         ### ↑(move up) action ###
         
         if (row - 1) >= 0:
-           temp_state1 = new State()
-           temp_state1.tile_seq = walk_state.tile_seq
+            temp_state1 = State()
+            temp_state1.tile_seq = walk_state.tile_seq
             """
-             for some reason deleting this comment would cause some bug ... wtf
             """
             temp = temp_state1[row-1,col]
             temp_state1[row-1,col] = temp_state1[row,col]
@@ -114,13 +113,13 @@ class InformedSearchSolver:
                 temp_state1.weight = heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
-                if heuristic_test(temp_state1) < heuristic_test(temp)
-                    self.openlist.append(temp_state1) 
+                #if heuristic_test(temp_state1) < heuristic_test(temp) or depath < 
+                self.openlist.append(temp_state1) 
             if ret == 3 :
-                if heuristic_test(temp_state1) < heuristic_test(temp)
-                    self.closed.remove(temp_state1)
-                    self.openlist.append(temp_state1) 
-         
+                #if heuristic_test(temp_state1) < heuristic_test(temp)
+                self.closed.remove(temp_state1)
+                self.openlist.append(temp_state1) 
+
 
             """
              *get the 2d array of current 
@@ -153,17 +152,17 @@ class InformedSearchSolver:
 
         ### ↓(move down) action ###
         if (row + 1) < 2:
-           temp_state1 = new State()
-           temp_state1.tile_seq = walk_state.tile_seq
-           temp = temp_state1[row+1,col]
-           temp_state1[row+1,col] = temp_state1[row,col]
-           temp_state1[row,col] = temp
-           ret = check_inclusive(temp_state1)
+            temp_state1 = State()
+            temp_state1.tile_seq = walk_state.tile_seq
+            temp = temp_state1[row+1,col]
+            temp_state1[row+1,col] = temp_state1[row,col]
+            temp_state1[row,col] = temp
+            ret = check_inclusive(temp_state1)
 
 
         ### ←(move left) action ###
         if (col - 1) >= 0:
-           temp_state1 = new State()
+           temp_state1 = State()
            temp_state1.tile_seq = walk_state.tile_seq
            temp = temp_state1[row,col-1]
            temp_state1[row,col-1] = temp_state1[row,col]
@@ -173,7 +172,7 @@ class InformedSearchSolver:
 
         ### →(move right) action ###
         if (col + 1) < 2:
-           temp_state1 = new State()
+           temp_state1 = State()
            temp_state1.tile_seq = walk_state.tile_seq
            temp = temp_state1[row,col+1]
            temp_state1[row,col+1] = temp_state1[row,col]
@@ -277,6 +276,7 @@ class InformedSearchSolver:
         
         while not self.openlist:
             if self.current.equals(self.goal):
+                print("1")
                 #return the path from the start to current state
             else:
                 self.state_walk()
