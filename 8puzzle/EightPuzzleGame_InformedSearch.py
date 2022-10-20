@@ -116,12 +116,12 @@ class InformedSearchSolver:
             if ret == 2 :
                 if heuristic_test(temp_state1) < heuristic_test(temp)
                     self.openlist.append(temp_state1) 
-            """
             if ret == 3 :
-                temp_state1.depth = self.depth
-                temp_state1.weight = heuristic_test(temp_state1)
-                self.openlist.append(temp_state1)
-            """    
+                if heuristic_test(temp_state1) < heuristic_test(temp)
+                    self.closed.remove(temp_state1)
+                    self.openlist.append(temp_state1) 
+         
+
             """
              *get the 2d array of current 
              *define a temp 2d array and loop over current.tile_seq
