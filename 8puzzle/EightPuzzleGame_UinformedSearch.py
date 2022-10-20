@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 from EightPuzzleGame_State import State
 
 '''
@@ -32,13 +33,18 @@ class UninformedSearchSolver:
         """
         ret = -1
 
+
         #TODO your code start here
-        if s in openlist :
-             ret = 1
+        for state in self.openlist:
+            a = s.tile_seq == state.tile_seq
+            if a.all():
+                return 1
+            
 
-
-        if s in closed :
-             ret = 1
+        for state in self.closed:
+            a = s.tile_seq == state.tile_seq
+            if a.all():
+                return 1
         #TODO your code end here
         return ret      
 
@@ -51,14 +57,14 @@ class UninformedSearchSolver:
          * Note that in this framework the blank tile is represent by '0'
         """
 
-        walk_state = self.current.tile_seq
+        walk_state = self.current
         row = 0
         col = 0
 
         # Loop to find the location of the blank space
-        for i in range(len(walk_state)):
-            for j in range(len(walk_state[i])):
-                if walk_state[i, j] == 0:
+        for i in range(len(walk_state.tile_seq)):
+            for j in range(len(walk_state.tile_seq[i])):
+                if walk_state.tile_seq[i, j] == 0:
                     row = i
                     col = j
                     break
@@ -70,51 +76,51 @@ class UninformedSearchSolver:
         # TODO your code start here
         ### ↑(move up) action ###
         #(row - 1) is checked to prevent out of bounds errors, the tile is swapped with the one above it
-        temp_state1 = walk_state
+        temp_state1 = copy.deepcopy(walk_state)
         if (row - 1) >= 0:
             """
              
             """
-            temp = temp_state1[row-1,col]
-            temp_state1[row-1,col] = temp_state1[row,col]
-            temp_state1[row,col] = temp
-            ret = check_inclusive(temp_state1)
+            temp = temp_state1.tile_seq[row-1,col]
+            temp_state1.tile_seq[row-1,col] = temp_state1.tile_seq[row,col]
+            temp_state1.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state1)
             if ret != 1 :
                 self.openlist.append(temp_state1)
                 #add to the left of openlist - depth first search
-                self.openlist.insert(0,temp_state1)
+                #self.openlist.insert(0,temp_state1)
         ### ↓(move down) action ###
-        temp_state2 = walk_state
-        if (row+1) < 2 :
-            temp = temp_state2[row+1,col]
-            temp_state2[row+1,col] = temp_state2[row,col]
-            temp_state2[row,col] = temp
-            ret = check_inclusive(temp_state2)
+        temp_state2 = copy.deepcopy(walk_state)
+        if (row+1) <= 2 :
+            temp = temp_state2.tile_seq[row+1,col]
+            temp_state2.tile_seq[row+1,col] = temp_state2.tile_seq[row,col]
+            temp_state2.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state2)
             if ret != 1 :
                 self.openlist.append(temp_state2)
 
         ### ←(move left) action ###
-        temp_state3 = walk_state
+        temp_state3 = copy.deepcopy(walk_state)
         if (col - 1) >=0 :
-            temp = temp_state3[row,col-1]
-            temp_state3[row,col-1] = temp_state3[row,col]
-            temp_state3[row,col] = temp
-            ret = check_inclusive(temp_state3)
+            temp = temp_state3.tile_seq[row,col-1]
+            temp_state3.tile_seq[row,col-1] = temp_state3.tile_seq[row,col]
+            temp_state3.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state3)
             if ret != 1 :
                 self.openlist.append(temp_state3)
 
         ### →(move right) action ###
-        temp_state4 = walk_state
-        if (col + 1) < 2 :
-            temp = temp_state4[row,col+1]
-            temp_state4[row,col+1] = temp_state4[row,col]
-            temp_state4[row,col] = temp
-            ret = check_inclusive(temp_state4)
+        temp_state4 = copy.deepcopy(walk_state)
+        if (col + 1) <= 2 :
+            temp = temp_state4.tile_seq[row,col+1]
+            temp_state4.tile_seq[row,col+1] = temp_state4.tile_seq[row,col]
+            temp_state4.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state4)
             if ret != 1 :
                 self.openlist.append(temp_state4)
 
-        # Set the next current state
-
+        # Set the next current state to "leftmost" state in openlist
+            print(str(len(self.openlist)))
         #TODO your code end here
 
 
@@ -129,15 +135,22 @@ class UninformedSearchSolver:
         #breadth first search
         print("\n The visited states are: ")
 
-        while not self.openlist:
+        while self.openlist:
             # First you need to remove the current node from the open array and move it to the closed array
             self.current = self.openlist.pop(0)
             self.closed.append(self.current)
-            
+
             if self.current.equals(self.goal):
+                print("success")
                 return "success"
+                
             else:
                 self.state_walk()#generate the children
                 #for loop print out the content openlist
+                print("openlist")
+                for state in self.openlist:
+                    state_str = np.array2string(state.tile_seq, precision=2, separator=' ')
+                    print(state_str[1:-1])
+                print(" ")
 
 

@@ -55,11 +55,11 @@ class InformedSearchSolver:
             ret = 1
         # the child is already in open
         #return 2
-        else if s in self.openlist :
+        elif s in self.openlist :
             ret = 2
         # the child is already in closed
         #return 3
-        else if s in self.closed :
+        elif s in self.closed :
             ret = 3
 
         return ret
