@@ -92,10 +92,7 @@ class InformedSearchSolver:
 
         ''' The following program is used to do the state space actions
          The 4 conditions for moving the tiles all use similar logic, they only differ in the location of the 
-         tile that needs to be swapped. That being the case, I will only comment the first subroutine
-
-         if up is row - 1 > 0 than down would be row + 1 > 0 ?
-         
+         tile that needs to be swapped. That being the case, I will only comment the first subroutine         
          '''
         # TODO your code start here
         ### ↑(move up) action ###
@@ -153,7 +150,7 @@ class InformedSearchSolver:
 
 
         ### ↓(move down) action ###
-        if (row + 1) >= 0:
+        if (row + 1) < 2:
            temp_state1 = new State()
            temp_state1.tile_seq = walk_state.tile_seq
            temp = temp_state1[row+1,col]
@@ -173,7 +170,7 @@ class InformedSearchSolver:
 
 
         ### →(move right) action ###
-        if (col + 1) >= 0:
+        if (col + 1) < 2:
            temp_state1 = new State()
            temp_state1.tile_seq = walk_state.tile_seq
            temp = temp_state1[row,col+1]
