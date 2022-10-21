@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 from EightPuzzleGame_State import State
 '''
 This class implement the Best-First-Search (BFS) algorithm along with the Heuristic search strategies
@@ -101,7 +102,7 @@ class InformedSearchSolver:
         
         if (row - 1) >= 0:
             temp_state1 = State()
-            temp_state1.tile_seq = walk_state
+            temp_state1.tile_seq = copy.deepcopy(walk_state)
             """
             """
             temp = temp_state1.tile_seq[row-1,col]
@@ -113,16 +114,16 @@ class InformedSearchSolver:
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
-                for state in openlist:
+                for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state2 = state 
                 if temp_state2.depth < temp_state1.depth:
                     temp_state0 = temp_state1
                     temp_state1 = temp_state2
                     temp_state2 = temp_state0
-                    states_path.append(temp_state2)
+                    self.states_path.append(temp_state2)
             if ret == 3 :
-                for state in closed:
+                for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state = state      
                 if temp_state1.depth < temp_state.depth:
@@ -162,7 +163,7 @@ class InformedSearchSolver:
         ### ↓(move down) action ###
         if (row + 1) <= 2:
             temp_state1 = State()
-            temp_state1.tile_seq = walk_state
+            temp_state1.tile_seq = copy.deepcopy(walk_state)
             temp = temp_state1.tile_seq[row+1,col]
             temp_state1.tile_seq[row+1,col] = temp_state1.tile_seq[row,col]
             temp_state1.tile_seq[row,col] = temp
@@ -172,16 +173,16 @@ class InformedSearchSolver:
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
-                for state in openlist:
+                for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state2 = state 
                 if temp_state2.depth < temp_state1.depth:
                     temp_state0 = temp_state1
                     temp_state1 = temp_state2
                     temp_state2 = temp_state0
-                    states_path.append(temp_state2)
+                    self.states_path.append(temp_state2)
             if ret == 3 :
-                for state in closed:
+                for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state = state      
                 if temp_state1.depth < temp_state.depth:
@@ -192,7 +193,7 @@ class InformedSearchSolver:
         ### ←(move left) action ###
         if (col - 1) >= 0:
             temp_state1 = State()
-            temp_state1.tile_seq = walk_state
+            temp_state1.tile_seq = copy.deepcopy(walk_state)
             temp = temp_state1.tile_seq[row,col-1]
             temp_state1.tile_seq[row,col-1] = temp_state1.tile_seq[row,col]
             temp_state1.tile_seq[row,col] = temp
@@ -204,7 +205,7 @@ class InformedSearchSolver:
                 self.openlist.append(temp_state1)
 
             if ret == 2 :
-                for state in openlist:
+                for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state2 = state 
                     
@@ -212,10 +213,10 @@ class InformedSearchSolver:
                     temp_state0 = temp_state1
                     temp_state1 = temp_state2
                     temp_state2 = temp_state0
-                    states_path.append(temp_state2)
+                    self.states_path.append(temp_state2)
 
             if ret == 3 :
-                for state in closed:
+                for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state = state      
                 if temp_state1.depth < temp_state.depth:
@@ -226,7 +227,7 @@ class InformedSearchSolver:
         ### →(move right) action ###
         if (col + 1) <= 2:
             temp_state1 = State()
-            temp_state1.tile_seq = walk_state
+            temp_state1.tile_seq = copy.deepcopy(walk_state)
             temp = temp_state1.tile_seq[row,col+1]
             temp_state1.tile_seq[row,col+1] = temp_state1.tile_seq[row,col]
             temp_state1.tile_seq[row,col] = temp
@@ -236,16 +237,16 @@ class InformedSearchSolver:
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
-                for state in openlist:
+                for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state2 = state 
                 if temp_state2.depth < temp_state1.depth:
                     temp_state0 = temp_state1
                     temp_state1 = temp_state2
                     temp_state2 = temp_state0
-                    states_path.append(temp_state2)
+                    self.states_path.append(temp_state2)
             if ret == 3 :
-                for state in closed:
+                for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
                         temp_state = state      
                 if temp_state1.depth < temp_state.depth:
