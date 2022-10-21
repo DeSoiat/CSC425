@@ -9,6 +9,7 @@ Your name: Zonglin Wu
 '''
 
 import numpy as np
+import time
 from EightPuzzleGame_State import State
 from EightPuzzleGame_UinformedSearch import UninformedSearchSolver
 from EightPuzzleGame_InformedSearch import InformedSearchSolver
@@ -41,12 +42,22 @@ class EightPuzzleGame:
 
 
         self.tiles = 8
+        
+        t0 = time.time()
 
         UIS_solver = UninformedSearchSolver(init, goal)
         UIS_solver.run()
+        
+        t1 = time.time()
+        ComputationalTime=(t1-t0)
 
+        t2 = time.time()
         IS_solver = InformedSearchSolver(init, goal)
         IS_solver.run()
+        t3 = time.time()
+        ComputationalTime2=(t3-t2)
+        
+        print("uninfo",ComputationalTime, "info",ComputationalTime2)
 
 
 # start the puzzle game
