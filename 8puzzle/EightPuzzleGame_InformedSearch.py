@@ -116,16 +116,17 @@ class InformedSearchSolver:
             if ret == 2 :
                 for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = state 
+                        temp_state2 = copy.deepcopy(state) 
                 if temp_state2.depth < temp_state1.depth:
                     temp_state0 = temp_state1
                     temp_state1 = temp_state2
                     temp_state2 = temp_state0
                     self.states_path.append(temp_state2)
+
             if ret == 3 :
                 for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = state      
+                        temp_state = copy.deepcopy(state)      
                 if temp_state1.depth < temp_state.depth:
                     self.closed.remove(temp_state1)
                     self.openlist.append(temp_state1) 
@@ -175,16 +176,17 @@ class InformedSearchSolver:
             if ret == 2 :
                 for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = state 
+                        temp_state2 = copy.deepcopy(state) 
                 if temp_state2.depth < temp_state1.depth:
                     temp_state0 = temp_state1
                     temp_state1 = temp_state2
                     temp_state2 = temp_state0
                     self.states_path.append(temp_state2)
+
             if ret == 3 :
                 for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = state      
+                        temp_state = copy.deepcopy(state)      
                 if temp_state1.depth < temp_state.depth:
                     self.closed.remove(temp_state1)
                     self.openlist.append(temp_state1) 
@@ -207,7 +209,7 @@ class InformedSearchSolver:
             if ret == 2 :
                 for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = state 
+                        temp_state2 = copy.deepcopy(state) 
                     
                 if temp_state2.depth < temp_state1.depth:
                     temp_state0 = temp_state1
@@ -215,10 +217,11 @@ class InformedSearchSolver:
                     temp_state2 = temp_state0
                     self.states_path.append(temp_state2)
 
+
             if ret == 3 :
                 for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = state      
+                        temp_state = copy.deepcopy(state)      
                 if temp_state1.depth < temp_state.depth:
                     self.closed.remove(temp_state1)
                     self.openlist.append(temp_state1) 
@@ -239,16 +242,17 @@ class InformedSearchSolver:
             if ret == 2 :
                 for state in self.openlist:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = state 
+                        temp_state2 = copy.deepcopy(state) 
                 if temp_state2.depth < temp_state1.depth:
                     temp_state0 = temp_state1
                     temp_state1 = temp_state2
                     temp_state2 = temp_state0
                     self.states_path.append(temp_state2)
+
             if ret == 3 :
                 for state in self.closed:
                     if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = state      
+                        temp_state = copy.deepcopy(state)      
                 if temp_state1.depth < temp_state.depth:
                     self.closed.remove(temp_state1)
                     self.openlist.append(temp_state1) 
@@ -323,13 +327,20 @@ class InformedSearchSolver:
         print("\n The visited states are: ")
         path = 0
         # add closed state
+        
+        isNotSolved = True
 
-        while self.openlist:
+        while isNotSolved:
+            
             self.current = self.openlist.pop(0)
             self.closed.append(self.current)
+            
             if self.current.equals(self.goal):
-                print("1")
-                #return the path from the start to current state
+                isNotSolved = False
+                print("\nEnd result :")
+                for state in self.states_path:
+                    print("\n",state.tile_seq)
+                print("\n",self.current.tile_seq)
             else:
                 self.state_walk()
                 print('Visited State number ', path + 1)
@@ -337,6 +348,6 @@ class InformedSearchSolver:
                 print(pathstate_str[1:-1])
                 path += 1
 
-        print("\nIt took ", path, " iterations to reach to the goal state")
-        print("The length of the path is: ", self.current.depth)
+        print("\nIt took ", path+1, " iterations to reach to the goal state")
+        print("The length of the path is: ", self.current.depth+1)
 
