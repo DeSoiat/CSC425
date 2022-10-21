@@ -44,8 +44,8 @@ class InformedSearchSolver:
          * @param s
          * @return
         """
-        #in_open = 0
-        #in_closed = 0
+        in_open = 0
+        in_closed = 0
         ret = -1
 
         # TODO your code start here
@@ -113,12 +113,21 @@ class InformedSearchSolver:
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
-                #if heuristic_test(temp_state1) < heuristic_test(temp) or depath < 
-                self.openlist.append(temp_state1) 
+                for state in openlist:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state2 = state 
+                if temp_state2.depth < temp_state1.depth:
+                    temp_state0 = temp_state1
+                    temp_state1 = temp_state2
+                    temp_state2 = temp_state0
+                    states_path.append(temp_state2)
             if ret == 3 :
-                #if heuristic_test(temp_state1) < heuristic_test(temp)
-                self.closed.remove(temp_state1)
-                self.openlist.append(temp_state1) 
+                for state in closed:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state = state      
+                if temp_state1.depth < temp_state.depth:
+                    self.closed.remove(temp_state1)
+                    self.openlist.append(temp_state1) 
 
 
             """
@@ -138,8 +147,8 @@ class InformedSearchSolver:
              *end;
 
              *if flag = 2 //in the open list
-             *if the child was reached by a shorter path  #  by compare the heuristic value ?
-             *then give the state on open the shorter path # what does this mean ? add to the open list ?
+             *if the child was reached by a shorter path 
+             *then give the state on open the shorter path 
 
              *if flag = 3 //in the closed list
              *if the child was reached by a shorter path then
@@ -158,29 +167,95 @@ class InformedSearchSolver:
             temp_state1.tile_seq[row+1,col] = temp_state1.tile_seq[row,col]
             temp_state1.tile_seq[row,col] = temp
             ret = self.check_inclusive(temp_state1)
+            if ret == 1 :
+                temp_state1.depth = self.depth
+                temp_state1.weight = self.heuristic_test(temp_state1)
+                self.openlist.append(temp_state1)
+            if ret == 2 :
+                for state in openlist:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state2 = state 
+                if temp_state2.depth < temp_state1.depth:
+                    temp_state0 = temp_state1
+                    temp_state1 = temp_state2
+                    temp_state2 = temp_state0
+                    states_path.append(temp_state2)
+            if ret == 3 :
+                for state in closed:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state = state      
+                if temp_state1.depth < temp_state.depth:
+                    self.closed.remove(temp_state1)
+                    self.openlist.append(temp_state1) 
 
 
         ### ←(move left) action ###
         if (col - 1) >= 0:
-           temp_state1 = State()
-           temp_state1.tile_seq = walk_state
-           temp = temp_state1.tile_seq[row,col-1]
-           temp_state1.tile_seq[row,col-1] = temp_state1.tile_seq[row,col]
-           temp_state1.tile_seq[row,col] = temp
-           ret = self.check_inclusive(temp_state1)
+            temp_state1 = State()
+            temp_state1.tile_seq = walk_state
+            temp = temp_state1.tile_seq[row,col-1]
+            temp_state1.tile_seq[row,col-1] = temp_state1.tile_seq[row,col]
+            temp_state1.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state1)
+
+            if ret == 1 :
+                temp_state1.depth = self.depth
+                temp_state1.weight = self.heuristic_test(temp_state1)
+                self.openlist.append(temp_state1)
+
+            if ret == 2 :
+                for state in openlist:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state2 = state 
+                    
+                if temp_state2.depth < temp_state1.depth:
+                    temp_state0 = temp_state1
+                    temp_state1 = temp_state2
+                    temp_state2 = temp_state0
+                    states_path.append(temp_state2)
+
+            if ret == 3 :
+                for state in closed:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state = state      
+                if temp_state1.depth < temp_state.depth:
+                    self.closed.remove(temp_state1)
+                    self.openlist.append(temp_state1) 
 
 
         ### →(move right) action ###
         if (col + 1) <= 2:
-           temp_state1 = State()
-           temp_state1.tile_seq = walk_state
-           temp = temp_state1.tile_seq[row,col+1]
-           temp_state1.tile_seq[row,col+1] = temp_state1.tile_seq[row,col]
-           temp_state1.tile_seq[row,col] = temp
-           ret = self.check_inclusive(temp_state1)
+            temp_state1 = State()
+            temp_state1.tile_seq = walk_state
+            temp = temp_state1.tile_seq[row,col+1]
+            temp_state1.tile_seq[row,col+1] = temp_state1.tile_seq[row,col]
+            temp_state1.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state1)
+            if ret == 1 :
+                temp_state1.depth = self.depth
+                temp_state1.weight = self.heuristic_test(temp_state1)
+                self.openlist.append(temp_state1)
+            if ret == 2 :
+                for state in openlist:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state2 = state 
+                if temp_state2.depth < temp_state1.depth:
+                    temp_state0 = temp_state1
+                    temp_state1 = temp_state2
+                    temp_state2 = temp_state0
+                    states_path.append(temp_state2)
+            if ret == 3 :
+                for state in closed:
+                    if state.tile_seq == temp_state1.tile_seq:
+                        temp_state = state      
+                if temp_state1.depth < temp_state.depth:
+                    self.closed.remove(temp_state1)
+                    self.openlist.append(temp_state1) 
 
 
         # sort the open list first by h(n) then g(n)
+
+        self.openlist.sort(key=self.sortFun)
    
         # Set the next current state
         
@@ -219,40 +294,16 @@ class InformedSearchSolver:
          *check the every entry in curr_seq with goal_seq
         """
         #TODO your code end here
-        
 
-        # (2) Sum of distances out of place
-        h2 = 0
-        #TODO your code start here
-        """
-         *loop over the goal_seq and curr_seq in nested way
-         *locate the entry which has the same value in 
-         *curr_seq and goal_seq then calculate the offset
-         *through the absolute value of two differences
-         *of curr_row-goal_row and curr_col-goal_col
-         *absoulte value can be calculated by abs(...)
-        """
-        #TODO your code end here
-        
-        
-        # (3) 2 x the number of direct tile reversals
-        h3 = 0
-        #TODO your code start here
-        """
-         *loop over the curr_seq
-         *use a Γ(gamma)shap slider to walk throught curr_seq and goal_seq
-         *rule out the entry with value 0
-         *set the boundry restriction
-         *don't forget to time 2 at last
-         *for example 
-         *goal_seq  1 2 3   curr_seq  2 1 3 the Γ shape starts 
-         *       4 5 6          4 5 6
-         *       7 8 0          7 8 0
-         *with 1 2 in goal_seq and 2 1 in curr_seq thus the 
-         *    4             4
-         *reversal is 1 2 and 2 1
-        """
+        for i in range(len(curr_seq)):
+            for j in range(len(curr_seq[i])):
+                if curr_seq[i, j] != goal_seq[i,j]:
+                    h1 = h1 + 1
+                    
 
+        print("h1 = ")
+        print(h1)
+        return h1
         # update the heuristic value for current state
 
         #TODO your code end here
@@ -271,10 +322,10 @@ class InformedSearchSolver:
         print("\n The visited states are: ")
         path = 0
         # add closed state
-        self.current = self.openlist.pop(0)
-        self.closed.append(self.current)
-        
-        while not self.openlist:
+
+        while self.openlist:
+            self.current = self.openlist.pop(0)
+            self.closed.append(self.current)
             if self.current.equals(self.goal):
                 print("1")
                 #return the path from the start to current state
