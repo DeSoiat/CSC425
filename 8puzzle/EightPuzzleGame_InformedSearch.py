@@ -101,16 +101,16 @@ class InformedSearchSolver:
         
         if (row - 1) >= 0:
             temp_state1 = State()
-            temp_state1.tile_seq = walk_state.tile_seq
+            temp_state1.tile_seq = walk_state
             """
             """
-            temp = temp_state1[row-1,col]
-            temp_state1[row-1,col] = temp_state1[row,col]
-            temp_state1[row,col] = temp
-            ret = check_inclusive(temp_state1)
+            temp = temp_state1.tile_seq[row-1,col]
+            temp_state1.tile_seq[row-1,col] = temp_state1.tile_seq[row,col]
+            temp_state1.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state1)
             if ret == 1 :
                 temp_state1.depth = self.depth
-                temp_state1.weight = heuristic_test(temp_state1)
+                temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
                 #if heuristic_test(temp_state1) < heuristic_test(temp) or depath < 
@@ -153,38 +153,38 @@ class InformedSearchSolver:
         ### ↓(move down) action ###
         if (row + 1) <= 2:
             temp_state1 = State()
-            temp_state1.tile_seq = walk_state.tile_seq
-            temp = temp_state1[row+1,col]
-            temp_state1[row+1,col] = temp_state1[row,col]
-            temp_state1[row,col] = temp
-            ret = check_inclusive(temp_state1)
+            temp_state1.tile_seq = walk_state
+            temp = temp_state1.tile_seq[row+1,col]
+            temp_state1.tile_seq[row+1,col] = temp_state1.tile_seq[row,col]
+            temp_state1.tile_seq[row,col] = temp
+            ret = self.check_inclusive(temp_state1)
 
 
         ### ←(move left) action ###
         if (col - 1) >= 0:
            temp_state1 = State()
-           temp_state1.tile_seq = walk_state.tile_seq
-           temp = temp_state1[row,col-1]
-           temp_state1[row,col-1] = temp_state1[row,col]
-           temp_state1[row,col] = temp
-           ret = check_inclusive(temp_state1)
+           temp_state1.tile_seq = walk_state
+           temp = temp_state1.tile_seq[row,col-1]
+           temp_state1.tile_seq[row,col-1] = temp_state1.tile_seq[row,col]
+           temp_state1.tile_seq[row,col] = temp
+           ret = self.check_inclusive(temp_state1)
 
 
         ### →(move right) action ###
         if (col + 1) <= 2:
            temp_state1 = State()
-           temp_state1.tile_seq = walk_state.tile_seq
-           temp = temp_state1[row,col+1]
-           temp_state1[row,col+1] = temp_state1[row,col]
-           temp_state1[row,col] = temp
-           ret = check_inclusive(temp_state1)
+           temp_state1.tile_seq = walk_state
+           temp = temp_state1.tile_seq[row,col+1]
+           temp_state1.tile_seq[row,col+1] = temp_state1.tile_seq[row,col]
+           temp_state1.tile_seq[row,col] = temp
+           ret = self.check_inclusive(temp_state1)
 
 
         # sort the open list first by h(n) then g(n)
    
         # Set the next current state
         
-        states_path.append(self.current)
+        self.states_path.append(self.current)
 
         #TODO your code end here
 
