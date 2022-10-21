@@ -305,9 +305,8 @@ class InformedSearchSolver:
                 if curr_seq[i, j] != goal_seq[i,j]:
                     h1 = h1 + 1
                     
-
-        print("h1 = ")
-        print(h1)
+                    
+                    
         return h1
         # update the heuristic value for current state
 
