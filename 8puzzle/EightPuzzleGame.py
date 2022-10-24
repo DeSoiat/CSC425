@@ -27,6 +27,7 @@ class EightPuzzleGame:
         # initialize the init state and goal state as 2d array
         init_tile = np.array([[2, 3, 6], [1, 4, 8], [7, 5, 0]])
         #init_tile = np.array([[1, 2, 3], [0, 4, 6], [7, 5, 8]])
+        #init_tile = np.array([[8, 7, 6], [5, 4, 3], [2, 1, 0]])
         init = State(init_tile, 0, 0)
         print("\nStart state:")
         init_str = np.array2string(init_tile, precision=2, separator=' ')
@@ -45,8 +46,8 @@ class EightPuzzleGame:
         
         t0 = time.time()
 
-        UIS_solver = UninformedSearchSolver(init, goal)
-        UIS_solver.run()
+        #UIS_solver = UninformedSearchSolver(init, goal)
+        #UIS_solver.run()
         
         t1 = time.time()
         ComputationalTime=(t1-t0)
@@ -57,7 +58,7 @@ class EightPuzzleGame:
         t3 = time.time()
         ComputationalTime2=(t3-t2)
         
-        print("uninfo",ComputationalTime, "info",ComputationalTime2)
+        print("uninformed:",ComputationalTime, "informed:",ComputationalTime2)
 
 
 # start the puzzle game

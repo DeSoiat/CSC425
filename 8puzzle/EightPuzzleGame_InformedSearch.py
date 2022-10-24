@@ -50,20 +50,30 @@ class InformedSearchSolver:
         ret = -1
 
         # TODO your code start here
+        for state in self.openlist:
+            inopen = s.tile_seq == state.tile_seq
+            if inopen.all():
+                return 2
 
+        for state in self.closed:
+            inclosed = s.tile_seq == state.tile_seq
+            if inclosed.all():
+                return 3
+        ret = 1
+        
         # the child is not in open or closed
-        if s not in self.openlist or s not in self.closed :
-            ret = 1
+        #if s not in self.openlist and s not in self.closed :
+         #   ret = 1
 
         # the child is already in open
         #return 2
-        elif s in self.openlist :
-            ret = 2
+        #elif s in self.openlist :
+        #    ret = 2
 
         # the child is already in closed
         #return 3
-        elif s in self.closed :
-            ret = 3
+        #elif s in self.closed :
+        #    ret = 3
 
         return ret
 
@@ -103,6 +113,7 @@ class InformedSearchSolver:
         if (row - 1) >= 0:
             temp_state1 = State()
             temp_state1.tile_seq = copy.deepcopy(walk_state)
+            temp_state1.depth = self.current.depth +1
             """
             """
             temp = temp_state1.tile_seq[row-1,col]
@@ -110,25 +121,22 @@ class InformedSearchSolver:
             temp_state1.tile_seq[row,col] = temp
             ret = self.check_inclusive(temp_state1)
             if ret == 1 :
-                temp_state1.depth = self.depth
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
                 for state in self.openlist:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = copy.deepcopy(state) 
-                if temp_state2.depth < temp_state1.depth:
-                    temp_state0 = temp_state1
-                    temp_state1 = temp_state2
-                    temp_state2 = temp_state0
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state2 = state
+                if temp_state1.depth < temp_state2.depth:
+                    temp_state2.depth = temp_state1.depth
                     self.states_path.append(temp_state2)
 
             if ret == 3 :
                 for state in self.closed:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = copy.deepcopy(state)      
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state = state      
                 if temp_state1.depth < temp_state.depth:
-                    self.closed.remove(temp_state1)
+                    self.closed.remove(temp_state)
                     self.openlist.append(temp_state1) 
 
 
@@ -165,30 +173,28 @@ class InformedSearchSolver:
         if (row + 1) <= 2:
             temp_state1 = State()
             temp_state1.tile_seq = copy.deepcopy(walk_state)
+            temp_state1.depth = self.current.depth +1
             temp = temp_state1.tile_seq[row+1,col]
             temp_state1.tile_seq[row+1,col] = temp_state1.tile_seq[row,col]
             temp_state1.tile_seq[row,col] = temp
             ret = self.check_inclusive(temp_state1)
             if ret == 1 :
-                temp_state1.depth = self.depth
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
                 for state in self.openlist:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = copy.deepcopy(state) 
-                if temp_state2.depth < temp_state1.depth:
-                    temp_state0 = temp_state1
-                    temp_state1 = temp_state2
-                    temp_state2 = temp_state0
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state2 = state
+                if temp_state1.depth < temp_state2.depth:
+                    temp_state2.depth = temp_state1.depth
                     self.states_path.append(temp_state2)
 
             if ret == 3 :
                 for state in self.closed:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = copy.deepcopy(state)      
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state = state    
                 if temp_state1.depth < temp_state.depth:
-                    self.closed.remove(temp_state1)
+                    self.closed.remove(temp_state)
                     self.openlist.append(temp_state1) 
 
 
@@ -196,34 +202,32 @@ class InformedSearchSolver:
         if (col - 1) >= 0:
             temp_state1 = State()
             temp_state1.tile_seq = copy.deepcopy(walk_state)
+            temp_state1.depth = self.current.depth +1
             temp = temp_state1.tile_seq[row,col-1]
             temp_state1.tile_seq[row,col-1] = temp_state1.tile_seq[row,col]
             temp_state1.tile_seq[row,col] = temp
             ret = self.check_inclusive(temp_state1)
 
             if ret == 1 :
-                temp_state1.depth = self.depth
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
 
             if ret == 2 :
                 for state in self.openlist:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = copy.deepcopy(state) 
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state2 = state
                     
-                if temp_state2.depth < temp_state1.depth:
-                    temp_state0 = temp_state1
-                    temp_state1 = temp_state2
-                    temp_state2 = temp_state0
+                if temp_state1.depth < temp_state2.depth:
+                    temp_state2.depth = temp_state1.depth
                     self.states_path.append(temp_state2)
 
 
             if ret == 3 :
                 for state in self.closed:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = copy.deepcopy(state)      
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state = state      
                 if temp_state1.depth < temp_state.depth:
-                    self.closed.remove(temp_state1)
+                    self.closed.remove(temp_state)
                     self.openlist.append(temp_state1) 
 
 
@@ -231,30 +235,28 @@ class InformedSearchSolver:
         if (col + 1) <= 2:
             temp_state1 = State()
             temp_state1.tile_seq = copy.deepcopy(walk_state)
+            temp_state1.depth = self.current.depth +1
             temp = temp_state1.tile_seq[row,col+1]
             temp_state1.tile_seq[row,col+1] = temp_state1.tile_seq[row,col]
             temp_state1.tile_seq[row,col] = temp
             ret = self.check_inclusive(temp_state1)
             if ret == 1 :
-                temp_state1.depth = self.depth
                 temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
             if ret == 2 :
                 for state in self.openlist:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state2 = copy.deepcopy(state) 
-                if temp_state2.depth < temp_state1.depth:
-                    temp_state0 = temp_state1
-                    temp_state1 = temp_state2
-                    temp_state2 = temp_state0
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state2 = state 
+                if temp_state1.depth < temp_state2.depth:
+                    temp_state2.depth = temp_state1.depth
                     self.states_path.append(temp_state2)
 
             if ret == 3 :
                 for state in self.closed:
-                    if state.tile_seq == temp_state1.tile_seq:
-                        temp_state = copy.deepcopy(state)      
+                    if (state.tile_seq == temp_state1.tile_seq).all():
+                        temp_state = state    
                 if temp_state1.depth < temp_state.depth:
-                    self.closed.remove(temp_state1)
+                    self.closed.remove(temp_state)
                     self.openlist.append(temp_state1) 
 
 
