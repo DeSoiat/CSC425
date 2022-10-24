@@ -46,8 +46,8 @@ class EightPuzzleGame:
         
         t0 = time.time()
 
-        #UIS_solver = UninformedSearchSolver(init, goal)
-        #UIS_solver.run()
+        UIS_solver = UninformedSearchSolver(init, goal)
+        UIS_solver.run()
         
         t1 = time.time()
         ComputationalTime=(t1-t0)
